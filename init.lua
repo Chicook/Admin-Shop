@@ -1,16 +1,3 @@
--- Fonction pour ajouter un article à l'inventaire du joueur en échange d'un coin
-local function acheter_article(player, article, prix)
-    local name = player:get_player_name()
-    local inv = player:get_inventory()
-
-    if inv:contains_item("main", "shop:coin") then
-        inv:remove_item("main", "shop:coin")
-        inv:add_item("main", article)
-        minetest.chat_send_player(name, "You bought " .. article .. " for " .. prix .. " Coin")
-    else
-        minetest.chat_send_player(name, "You don't have enough Coin to buy " .. article .. ".")
-    end
-end
 
 -- Fonction pour acheter un article
 local function acheter_article(player, nom_article, prix_article)
@@ -18,9 +5,9 @@ local function acheter_article(player, nom_article, prix_article)
     local inventory = player:get_inventory()
 
     -- Vérifier si le joueur a suffisamment coin
-    if inventory:contains_item("main", "shop:coin "..prix_article) then
+    if inventory:contains_item("main", "shops:coin "..prix_article) then
         -- Retirer les coin de l'inventaire du joueur
-        inventory:remove_item("main", "shop:coin "..prix_article)
+        inventory:remove_item("main", "shops:coin "..prix_article)
 
         -- Ajouter l'article à l'inventaire du joueur
         local itemstack = ItemStack(nom_article.." 1")
@@ -32,7 +19,7 @@ local function acheter_article(player, nom_article, prix_article)
         end
     else
         -- Afficher un message si le joueur n'a pas suffisamment de coin
-        minetest.chat_send_player(name, "You do not have enough Coin to purchase this item.")
+        minetest.chat_send_player(name, "[Shop] You do not have enough Coin to purchase this item.")
     end
 end
 
@@ -171,27 +158,27 @@ minetest.register_chatcommand("shop", {
 })
 
 -- Enregistrement de l'item coin
-minetest.register_craftitem("shop:coin", {
+minetest.register_craftitem("shops:coin", {
     description = "Gold Coin",
     inventory_image = "coin.png",
 })
 
 -- Enregistrement de l'item bag coin
-minetest.register_craftitem("shop:coin_bag", {
+minetest.register_craftitem("shops:coin_bag", {
     description = "Bag of Coin",
     inventory_image = "bag_coin.png",
 })
 minetest.register_craft({
-    output = "shop:coin_bag",
+    output = "shops:coin_bag",
     recipe = {
-        {"shop:coin", "shop:coin", "shop:coin"},
-        {"default:paper", "farming:string", "shop:coin"},
-        {"shop:coin", "shop:coin", "shop:coin"}
+        {"shops:coin", "shops:coin", "shops:coin"},
+        {"default:paper", "farming:string", "shops:coin"},
+        {"shops:coin", "shops:coin", "shops:coin"}
     },
 })
 -- Recette pour fabriquer un coin à partir d'une gold_ingot et de tin_ingot
 minetest.register_craft({
-    output = "shop:coin 5",
+    output = "shops:coin 5",
     recipe = {
         {"default:gold_ingot", "default:tin_ingot"},
     },
@@ -199,9 +186,9 @@ minetest.register_craft({
 
 -- Recette pour fabriquer un coin 
 minetest.register_craft({
-    output = "shop:coin 7 ",
+    output = "shops:coin 7 ",
     recipe = {
-        {"shop:coin_bag"},
+        {"shops:coin_bag"},
     },
 })
 
